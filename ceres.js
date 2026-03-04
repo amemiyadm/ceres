@@ -11,7 +11,7 @@ export class Ceres {
         let node = root;
         for (const char of word) {
             if (!node.children[char]) {
-                node.children[char] = new TrieNode();
+                node.children[char] = new Ceres();
             }
             node = node.children[char];
             node.items.add(item);
