@@ -6,12 +6,24 @@ class Fauna {
 }
 
 export class Ceres {
+    constructor(data = []) {
+        this.root = new Fauna();
+
+        for (const item of data) {
+            for (const word of item.keywords) {
+                this.insert(word, item);
+            }
+        }
+    }
+
     insert(word, item) {
         let node = this.root;
+
         for (const char of word) {
             if (!node.children[char]) {
                 node.children[char] = new Ceres();
             }
+
             node = node.children[char];
             node.items.add(item);
         }
@@ -21,29 +33,21 @@ export class Ceres {
         if (!query) return [];
 
         let node = this.root;
+
         for (const char of query) {
-            if (!node.children[char]) {
-                return [];
-            }
+            if (!node.children[char]) return [];
+
             node = node.children[char];
         }
 
         const results = [];
+
         for (const item of node.items) {
             results.push(item);
+
             if (results.length === limit) break;
         }
 
         return Array.from(results);
-    }
-
-    constructor(data) {
-        this.root = new Fauna();
-
-        for (const item of data) {
-            for (const word of item.keywords) {
-                this.insert(word, item);
-            }
-        }
     }
 }
