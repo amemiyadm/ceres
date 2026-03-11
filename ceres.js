@@ -6,7 +6,7 @@ class Fauna {
 }
 
 export class Ceres {
-    constructor(data = []) {
+    constructor(data) {
         this.root = new Fauna();
 
         for (const item of data) {
@@ -21,7 +21,7 @@ export class Ceres {
 
         for (const char of word) {
             if (!node.children[char]) {
-                node.children[char] = new Ceres();
+                node.children[char] = new Fauna();
             }
 
             node = node.children[char];
